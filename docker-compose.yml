@@ -19,6 +19,14 @@ services:
       - MYSQL_PASSWORD=123456
     ports:
       - 8080:8080
+    deploy:
+      resources:
+        limits:
+          cpus: 0.50
+          memory: 512M
+        reservations:
+          cpus: 0.25
+          memory: 128M
     depends_on:
       - mysql
 
