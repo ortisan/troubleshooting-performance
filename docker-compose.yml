@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+
+  mysql:
+    image: mysql:8.0.23
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: test
+
+  app:
+    restart: always
+    image: tentativafc/troubleshooting-performance:1.0.0-snapshot
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=123456
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
