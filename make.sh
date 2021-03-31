@@ -19,7 +19,6 @@ set -e
 ## Building app
 mvn clean compile package
 docker build -t tentativafc/troubleshooting-performance:1.0.0-snapshot -f Dockerfile .
-docker push tentativafc/troubleshooting-performance:1.0.0-snapshot
 
 # Start docker containers. Obs: the services will build Dockerfile
 docker-compose up --build -d

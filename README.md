@@ -23,6 +23,15 @@
 VM configs 
 
 ```sh
+
+-XX:+UseContainerSupport
+-XX:MaxRAMPercentage=50
+-XX:+UseG1GC
+-XX:MaxGCPauseMillis=200
+-XX:ParallelGCThreads=5
+-XX:ConcGCThreads=5
+
+
 -Xms500m
 -Xmx500m
 -XX:+PrintGCDetails
@@ -75,3 +84,6 @@ https://www.oracle.com/webapps/redirect/signon?nexturl=https://download.oracle.c
 Interesting Grafana Dashboards:
 https://grafana.com/grafana/dashboards/10280
 10280
+
+## TODO
+**Apply regression to optimize throuput. Use docker-compose limits and variate the number of tasks**
