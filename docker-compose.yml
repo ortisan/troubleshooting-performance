@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3"
 services:
 
   mysql:
@@ -9,7 +9,7 @@ services:
       MYSQL_ROOT_PASSWORD: 123456
       MYSQL_DATABASE: test
     volumes:
-      - ./mysql-data:/var/lib/mysql
+      - ./docker-volumes/mysql:/var/lib/mysql
 
   app:
     restart: always
@@ -35,35 +35,16 @@ services:
 
   prometheus:
     image: prom/prometheus
+    user: "1000:1000"
     ports:
       - "9090:9090"
     volumes:
-      - prometheus-data:/prometheus
+      - ./docker-volumes/prometheus:/prometheus
 
   grafana:
     image: grafana/grafana
+    user: "1000:1000"
     ports:
       - "3000:3000"
     volumes:
-      - grafana-data:/var/lib/grafana
-
-volumes:
-  mysql-data:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: docker-volume/mysql
-  prometheus-data:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: docker-volume/prometheus
-  grafana-data:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: docker-volume/grafana
-
+      - ./docker-volumes/grafana:/var/lib/grafana

@@ -4,3 +4,7 @@ troubleshooting-performance.iml
 *.jfr
 *.log
 
+docker-volumes/mysql
+docker-volumes/prometheus/
+docker-volumes/grafana
+
