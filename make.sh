@@ -16,10 +16,18 @@ trap 'abort' 0
 
 set -e
 
+docker-compose down
+
 ## Building app
+cd stub
+mvn clean compile install
+
+cd -
+cd server
 mvn clean compile package
-docker build -t tentativafc/troubleshooting-performance:1.0.0-snapshot -f Dockerfile .
-#docker push tentativafc/troubleshooting-performance:1.0.0-snapshot
+docker build -t tentativafc/troubleshooting-performance-server:1.0.0-snapshot -f Dockerfile .
+#docker push tentativafc/troubleshooting-performance-server:1.0.0-snapshot
+cd -
 
 # Start docker containers. Obs: the services will build Dockerfile
 docker-compose up --build -d

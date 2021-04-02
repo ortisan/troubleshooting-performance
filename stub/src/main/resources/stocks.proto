@@ -1,0 +1,28 @@
+syntax = "proto3";
+import "google/protobuf/wrappers.proto";
+
+option java_multiple_files = true;
+option java_package = "br.ortiz.grpc.services";
+option go_package = "";
+
+package services;
+
+service StockService {
+  rpc Insert (QuoteMessage) returns (QuoteMessage) {}
+  rpc Get (QuoteQuery) returns (stream QuoteMessage) {}
+}
+
+message QuoteMessage {
+  google.protobuf.Int64Value id = 1;
+  google.protobuf.StringValue symbol = 2;
+  google.protobuf.Int64Value date = 3;
+  google.protobuf.DoubleValue open = 4;
+  google.protobuf.DoubleValue close = 5;
+  google.protobuf.DoubleValue high = 6;
+  google.protobuf.DoubleValue low = 7;
+  google.protobuf.DoubleValue volume = 8;
+}
+
+message QuoteQuery {
+  google.protobuf.StringValue symbol = 1;
+}

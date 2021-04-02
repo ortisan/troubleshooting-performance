@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>troubleshooting-performance</artifactId>
+    <groupId>br.ortiz</groupId>
+    <artifactId>server</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <parent>
@@ -19,6 +19,7 @@
         <java.version>11</java.version>
 
         <ehcache.version>3.9.2</ehcache.version>
+        <grpc-springboot.version>2.11.0.RELEASE</grpc-springboot.version>
         <micrometer-jvm-extras.version>0.2.2</micrometer-jvm-extras.version>
         <mysql-connector-java.version>8.0.23</mysql-connector-java.version>
     </properties>
@@ -69,14 +70,48 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
 
-        <!-- Lombok-->
+        <!-- gRPC -->
+        <dependency>
+            <groupId>br.ortiz</groupId>
+            <artifactId>stub</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.grpc</groupId>
+                    <artifactId>grpc-netty-shaded</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.grpc</groupId>
+                    <artifactId>grpc-protobuf</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.grpc</groupId>
+                    <artifactId>grpc-stub</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.protobuf</groupId>
+                    <artifactId>protobuf-java</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.tomcat</groupId>
+                    <artifactId>annotations-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>net.devh</groupId>
+            <artifactId>grpc-server-spring-boot-starter</artifactId>
+            <version>${grpc-springboot.version}</version>
+        </dependency>
+
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
 
-        <!-- Metrics-->
+        <!-- Metrics -->
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
@@ -101,9 +136,8 @@
     </dependencies>
 
 
-
     <build>
-        <finalName>app</finalName>
+        <finalName>server</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
