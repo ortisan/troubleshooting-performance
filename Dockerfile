@@ -1,13 +1,24 @@
-#FROM adoptopenjdk/openjdk11:alpine
-FROM openjdk:11.0.6-jre-slim
-#RUN set -ex && apk --no-cache add sudo
-#RUN apk add --no-cache gdb
-RUN apt-get update && apt-get install libjemalloc2 && rm -rf /var/lib/apt/lists/*
-ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so.2
-WORKDIR '/app'
-COPY ./target/app.jar ./app.jar
-#CMD ["java", "-XX:NativeMemoryTracking=summary", "-XX:MaxRAMPercentage=50", "-XX:MaxGCPauseMillis=200", "-XX:ParallelGCThreads=5", "-XX:ConcGCThreads=5", "-jar", "app.jar"]
-#CMD ["java", "-XX:NativeMemoryTracking=summary", "-XX:MaxMetaspaceSize=256m", "-Xms128m", "-Xmx200m", "-XX:MaxGCPauseMillis=200", "-XX:ParallelGCThreads=5", "-XX:ConcGCThreads=5", "-jar", "app.jar"]
-#CMD ["java", "-XX:NativeMemoryTracking=summary", "-XX:CompressedClassSpaceSize=128m", "-XX:MaxMetaspaceSize=128m", "-Xms128m", "-Xmx200m", "-XX:MaxGCPauseMillis=200", "-XX:ParallelGCThreads=5", "-XX:ConcGCThreads=5", "-jar", "app.jar"]
-#CMD ["java", "-XX:NativeMemoryTracking=summary", "-XX:-UseStringDeduplication", "-XX:-TieredCompilation", "-XX:CompressedClassSpaceSize=128m", "-XX:MaxMetaspaceSize=128m", "-Xms128m", "-Xmx200m", "-XX:MaxGCPauseMillis=200", "-XX:ParallelGCThreads=5", "-XX:ConcGCThreads=5", "-jar", "app.jar"]
-CMD ["java", "-XX:NativeMemoryTracking=summary", "-XX:MaxDirectMemorySize=128m", "-XX:+UseStringDeduplication", "-XX:CompressedClassSpaceSize=64m", "-XX:MaxMetaspaceSize=128m", "-Xms128m", "-Xmx200m", "-XX:MaxGCPauseMillis=200", "-XX:ParallelGCThreads=5", "-XX:ConcGCThreads=5", "-jar", "app.jar"]
+FROM adoptopenjdk/openjdk11:jdk-11.0.10_9-alpine
+
+RUN apk --no-cache add git build-base cmake linux-headers curl ca-certificates \
+    && mkdir -p /opt/appdynamics/ /usr/local/share/ca-certificates/itau /app
+
+RUN cd /; git clone --depth 1 --branch v1.6.7 https://github.com/microsoft/mimalloc; cd mimalloc; mkdir build; cd build; cmake ..; make -j$(nproc); make install
+
+ENV LD_PRELOAD=/lib/libmimalloc.so
+ENV MIMALLOC_LARGE_OS_PAGES=1
+ENV LANG C.UTF-8
+
+# Retirado os certificados
+
+WORKDIR /app
+
+ARG JAR_FILE=*.jar
+COPY ${JAR_FILE} app.jar
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=2m --retries=3 --timeout=8s \
+  CMD curl -f http://localhost:8080/actuator/health || exit 1
+
+ENTRYPOINT ["sh", "-c",  "java $JAVA_OPTS -jar app.jar"]
