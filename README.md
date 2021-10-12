@@ -28,7 +28,13 @@ To generate requests, change the [K6](https://k6.io/)/Jmeter scripts with yours 
    Run performance test using gRPC protocol
 
    ```sh
-   k6 run k6-grpc-script.js
+   k6 run k6-post-grpc-script.js
+   ```
+
+   Run performance test using rest
+
+   ```sh
+   k6 run k6-post-rest-script.js
    ```
 
 1. You can take snapshots of threaddump with this command
@@ -74,7 +80,7 @@ To generate requests, change the [K6](https://k6.io/)/Jmeter scripts with yours 
 | Service     | Port Number | Type/Tech       |
 | ----------- | ----------- | --------------- |
 | Mysql       | 3306        | DB              |
-| Application | 8080/9090   | Spring boot Rest / gRpc     |
+| Application | 8080/9090   | Spring boot Rest / gRPC     |
 | Prometheus  | 9091        | DB              |
 | Grafana     | 3030        | Metrics Monitor |
 
