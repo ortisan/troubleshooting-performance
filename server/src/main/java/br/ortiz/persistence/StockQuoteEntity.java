@@ -26,5 +26,4 @@ public class StockQuoteEntity {
     private BigDecimal high;
     private BigDecimal low;
     private BigDecimal volume;
-
 }

@@ -4,6 +4,11 @@ troubleshooting-performance.iml
 *.jfr
 *.log
 
+**/.classpath
+**/.factorypath
+**/.project
+**/.settings/
+
 docker-volumes/mysql
 docker-volumes/prometheus/
 docker-volumes/grafana

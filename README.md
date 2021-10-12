@@ -90,19 +90,28 @@ To generate requests, change the [K6](https://k6.io/)/Jmeter scripts with yours 
 | Grafana       | http://localhost:3000 |
 
 
-#### Grafana
+## Grafana
 
 **First login:**
 
-user: **admin**
+   user: **admin**
 
-password: **admin**
+   password: **admin**
+
+### Configure Datasource
+
+Configure the datasource using docker-compose service dns and port(**prometheus:9090**)
+
+![image](images/grafana-datasource-config.png)
 
 **Useful Dashboards:**
 
       1. Micrometer - https://grafana.com/grafana/dashboards/4701
+![image](images/dashboard-jvm-micrometer.png)
 
       2. Spring boot - https://grafana.com/grafana/dashboards/10280
+      
+![image](images/dashboard-springboot.png)
 
 ### Datascience and Analytics
 
