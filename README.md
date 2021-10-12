@@ -121,7 +121,7 @@ Configure the datasource using docker-compose service dns and port(**prometheus:
 
 ## Datascience and Analytics
 
-On **analytics** directory follow instructions of [Readme.md](https://github.com/ortisan/troubleshooting-performance/tree/main/analytics/README.md).
+Into **analytics** directory follow instructions of [Readme.md](https://github.com/ortisan/troubleshooting-performance/tree/main/analytics/README.md).
 
 ## Tests
 
