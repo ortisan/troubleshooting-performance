@@ -1,6 +1,6 @@
 # Troubleshooting-Performance
 
-This project has a complete ecosystem for throubleshootings with spring-boot, rest/grpc, hibernate and ehcache application.
+This project provides a complete ecosystem for throubleshootings with spring-boot, rest/grpc, hibernate and ehcache application.
 
 You can change de hyperparameters like jvm or minmalloc/jemalloc configs and measure the metrics.
 
@@ -14,7 +14,7 @@ To generate requests, change the [K6](https://k6.io/)/Jmeter scripts with yours 
    management.endpoints.web.exposure.include=*
    ```
 
-1. On **Dockerfile** comment or discomment memory allocations configs and jvm parameters
+1. Into **Dockerfile** comment or discomment memory allocations configs and jvm parameters
 
 1. Start environment:
 
@@ -37,7 +37,7 @@ To generate requests, change the [K6](https://k6.io/)/Jmeter scripts with yours 
    k6 run k6-post-rest-script.js
    ```
 
-1. You can take snapshots of threaddump with this command
+1. You can take snapshots of threaddump with this command:
 
    ```sh
    sh generate_threaddump.sh
@@ -119,17 +119,17 @@ Configure the datasource using docker-compose service dns and port(**prometheus:
       
 ![image](images/dashboard-springboot.png)
 
-### Datascience and Analytics
+## Datascience and Analytics
 
 On **analytics** directory follow instructions of [Readme.md](https://github.com/ortisan/troubleshooting-performance/tree/main/analytics/README.md).
 
-### Tests
+## Tests
 
 Decreasing Tomcat and Hikari thread pool size:
 
 ![image](images/threadpool.png)
 
-### Useful links
+## Useful links
 
 - [JMC tool](https://www.oracle.com/webapps/redirect/signon?nexturl=https://download.oracle.com/otn-pub/java/jmc/7.1.2%2B04/a4634525489241b9a9e1aa73d9e118e6/jmc-7.1.2_linux-x64.tar.gz)
 
@@ -151,7 +151,7 @@ Decreasing Tomcat and Hikari thread pool size:
 - [Troubleshooting Problems With Native (Off-Heap) Memory in Java Application](https://dzone.com/articles/troubleshooting-problems-with-native-off-heap-memo)
 
 
-### Useful Commands
+## Useful Commands
 
 - Show jvm params:
 
