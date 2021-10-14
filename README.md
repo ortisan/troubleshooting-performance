@@ -37,6 +37,12 @@ To generate requests, change the [K6](https://k6.io/)/Jmeter scripts with yours 
    k6 run k6-post-rest-script.js
    ```
 
+   Run consumer rest calling gRPC server. This tests the keep alive configs from server and client
+
+   ```sh
+   k6 run k6-post-consumer-proxy-script.js
+   ```
+
 1. You can take snapshots of threaddump with this command:
 
    ```sh
@@ -81,6 +87,7 @@ To generate requests, change the [K6](https://k6.io/)/Jmeter scripts with yours 
 | ----------- | ----------- | --------------- |
 | Mysql       | 3306        | DB              |
 | Application | 8080/9090   | Spring boot Rest / gRPC     |
+| Consumer Proxy | 8081   | Spring boot Rest     |
 | Prometheus  | 9091        | DB              |
 | Grafana     | 3030        | Metrics Monitor |
 
@@ -92,9 +99,9 @@ To generate requests, change the [K6](https://k6.io/)/Jmeter scripts with yours 
 | Application - Metrics       | http://localhost:8080/actuator/prometheus |
 | Application - ThreadDump       | http://localhost:8080/actuator/threaddump |
 | Application - HeapDump       | http://localhost:8080/actuator/heapdump |
+| Proxy-gRPC       | http://localhost:8081/proxy-stock-quotes |
 | Prometheus       | http://localhost:9091 |
 | Grafana       | http://localhost:3000 |
-
 
 ## Grafana
 

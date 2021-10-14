@@ -58,6 +58,27 @@ services:
     depends_on:
       - mysql
 
+  proxy-grpc:
+    restart: always
+    build:
+      context: proxy-grpc
+      dockerfile: Dockerfile
+    environment:
+      - PORT=8080
+      - STOCKS_SERVICE_URI=static://server:9090
+    ports:
+      - 8081:8080
+    deploy:
+      resources:
+        limits:
+          cpus: 1
+          memory: 512M
+        reservations:
+          cpus: 1
+          memory: 512M
+    depends_on:
+      - server
+
   prometheus:
     image: prom/prometheus
     user: "1000:1000"
