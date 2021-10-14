@@ -87,7 +87,7 @@ To generate requests, change the [K6](https://k6.io/)/Jmeter scripts with yours 
 | ----------- | ----------- | --------------- |
 | Mysql       | 3306        | DB              |
 | Application | 8080/9090   | Spring boot Rest / gRPC     |
-| Consumer Proxy | 8081   | Spring boot Rest     |
+| Proxy-gRPC | 8081   | Spring boot Rest     |
 | Prometheus  | 9091        | DB              |
 | Grafana     | 3030        | Metrics Monitor |
 
