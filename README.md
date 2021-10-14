@@ -16,12 +16,19 @@ To generate requests, change the [K6](https://k6.io/)/Jmeter scripts with yours 
 
 1. Into **Dockerfile** comment or discomment memory allocations configs and jvm parameters
 
-1. Start environment:
+1. Start Docker environment:
 
    ```sh
    make.sh
    ```
+
    This step will build projects and start environment with docker-compose.
+
+2. Start K8S environment (IN PROGRESS):
+
+   ```sh
+   configure-k8s.sh
+   ```
 
 1. Run the [K6](https://k6.io/) scripts
 
@@ -40,7 +47,7 @@ To generate requests, change the [K6](https://k6.io/)/Jmeter scripts with yours 
    Run consumer rest calling gRPC server. This tests the keep alive configs from server and client
 
    ```sh
-   k6 run k6-post-consumer-proxy-script.js
+   k6 run k6-post-proxy-grpc-script.js
    ```
 
 1. You can take snapshots of threaddump with this command:

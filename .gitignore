@@ -9,6 +9,7 @@ troubleshooting-performance.iml
 **/.project
 **/.settings/
 **/*.iml
+server.iml
 
 docker-volumes/mysql
 docker-volumes/prometheus/

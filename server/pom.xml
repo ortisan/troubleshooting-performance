@@ -23,6 +23,19 @@
         <micrometer-jvm-extras.version>0.2.2</micrometer-jvm-extras.version>
         <mysql-connector-java.version>8.0.23</mysql-connector-java.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-bom</artifactId>
+                <version>1.41.0</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
 
         <!-- Spring -->
@@ -102,7 +115,29 @@
             <groupId>net.devh</groupId>
             <artifactId>grpc-server-spring-boot-starter</artifactId>
             <version>${grpc-springboot.version}</version>
+            <!--            <exclusions>-->
+            <!--                <exclusion>-->
+            <!--                    <groupId>io.grpc</groupId>-->
+            <!--                    <artifactId>grpc-netty-shaded</artifactId>-->
+            <!--                </exclusion>-->
+            <!--            </exclusions>-->
         </dependency>
+
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty-shaded</artifactId>
+        </dependency>
+
+        <!--        <dependency>-->
+        <!--            <groupId>io.grpc</groupId>-->
+        <!--            <artifactId>grpc-netty</artifactId>-->
+        <!--            <version>1.37.0</version>-->
+        <!--        </dependency>-->
+
 
         <!-- Lombok -->
         <dependency>

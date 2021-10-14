@@ -95,3 +95,32 @@ services:
       - "3000:3000"
     volumes:
       - ./docker-volumes/grafana:/var/lib/grafana
+
+  # front-envoy:
+  #   build:
+  #     context: grpc-zpages/envoy
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     # Forward host port to docker
+  #     - "9900:9900"
+  #   environment:
+  #     - GRPC_HOST=server
+  #     - GRPC_PORT=9090
+  #     # The docker port for envoy
+  #     - ENVOY_PORT=9900
+  #     # The host+port for the static assets server
+  #     - ASSETS_HOST=back-static-assets
+  #     - ASSETS_PORT=8089
+  #   mem_limit: 1000000000
+  #   # network_mode: 'host'
+  # back-static-assets:
+  #   build:
+  #     context: grpc-zpages/static-assets
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     - PORT=8089
+  #   ports:
+  #     # Make the port availble to linked dockers but no need
+  #     # to forward to host machine.
+  #     - "8089:8089"
+  #   # mem_limit: 1000000000"
