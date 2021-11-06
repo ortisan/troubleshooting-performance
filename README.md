@@ -126,11 +126,11 @@ Configure the datasource using docker-compose service dns and port(**prometheus:
 
 **Useful Dashboards:**
 
-      1. Micrometer - https://grafana.com/grafana/dashboards/4701
+   1. Single Pane of Glass (grafana/custom-dash-spg.json)
+![image](images/spg.png)
+   2. Micrometer - https://grafana.com/grafana/dashboards/4701
 ![image](images/dashboard-jvm-micrometer.png)
-
-      2. Spring boot - https://grafana.com/grafana/dashboards/10280
-      
+   3. Spring boot - https://grafana.com/grafana/dashboards/10280
 ![image](images/dashboard-springboot.png)
 
 ## Datascience and Analytics

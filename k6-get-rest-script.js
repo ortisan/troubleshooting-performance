@@ -12,23 +12,13 @@ export let options = {
 
 export default function () {
 
-  const payload = JSON.stringify({
-    symbol: 'ZZZ',
-    date: new Date().toISOString(),
-    open: 10.0,
-    close: 10.0,
-    high: 10.0,
-    low: 10.0,
-    volume: 1000
-  });
-
   var params = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
 
-  let res = http.post("http://localhost:8080/stock-quotes", payload, params);
+  let res = http.get("http://localhost:8080/stock-quotes?symbol=PETR4", params);
   // console.log(JSON.stringify(res))
   check(res, { 'status was 200': (r) => r.status == 200 });
   sleep(1);

@@ -8,6 +8,9 @@ import br.ortiz.service.QuotesService;
 import com.google.protobuf.DoubleValue;
 import com.google.protobuf.Int64Value;
 import com.google.protobuf.StringValue;
+import io.grpc.Metadata;
+import io.grpc.protobuf.ProtoUtils;
+import io.grpc.reflection.v1alpha.ErrorResponse;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.Random;
 
 @GrpcService
 public class ContollerGrpc extends StockServiceGrpc.StockServiceImplBase {
@@ -38,12 +42,17 @@ public class ContollerGrpc extends StockServiceGrpc.StockServiceImplBase {
 
     @Override
     public void insert(QuoteMessage request, StreamObserver<QuoteMessage> responseObserver) {
-        StockQuoteDTO quoteDTO = toDto(request);
-
-        StockQuoteDTO savedStockQuote = quotesService.save(quoteDTO);
-
-        responseObserver.onNext(toGrpc(savedStockQuote));
-        responseObserver.onCompleted();
+        int randomNumber = new Random().ints(0, 100).findFirst().getAsInt();
+        if (randomNumber <= 50) {
+            Metadata.Key<ErrorResponse> errorResponseKey = ProtoUtils.keyForProto(ErrorResponse.getDefaultInstance());
+            responseObserver.onError(io.grpc.Status.INVALID_ARGUMENT.withDescription("Random error")
+                    .asException());
+        } else {
+            StockQuoteDTO quoteDTO = toDto(request);
+            StockQuoteDTO savedStockQuote = quotesService.save(quoteDTO);
+            responseObserver.onNext(toGrpc(savedStockQuote));
+            responseObserver.onCompleted();
+        }
     }
 
     private StockQuoteDTO toDto(QuoteMessage quoteMessage) {

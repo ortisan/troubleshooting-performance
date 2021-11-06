@@ -49,12 +49,12 @@ services:
       - 1099:1099
     deploy:
       resources:
-        limits:
-          cpus: 1
-          memory: 512M
         reservations:
           cpus: 1
           memory: 512M
+        limits:
+          cpus: 2
+          memory: 1024M
     depends_on:
       - mysql
 

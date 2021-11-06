@@ -22,6 +22,7 @@
         <grpc-springboot.version>2.11.0.RELEASE</grpc-springboot.version>
         <micrometer-jvm-extras.version>0.2.2</micrometer-jvm-extras.version>
         <mysql-connector-java.version>8.0.23</mysql-connector-java.version>
+        <resilience4j-spring-boot2.version>1.7.1</resilience4j-spring-boot2.version>
     </properties>
 
     <dependencyManagement>
@@ -29,7 +30,7 @@
             <dependency>
                 <groupId>io.grpc</groupId>
                 <artifactId>grpc-bom</artifactId>
-                <version>1.41.0</version>
+                <version>1.37.0</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -155,6 +156,18 @@
             <groupId>io.github.mweirauch</groupId>
             <artifactId>micrometer-jvm-extras</artifactId>
             <version>${micrometer-jvm-extras.version}</version>
+        </dependency>
+
+        <!-- Resilience -->
+        <dependency>
+            <groupId>io.github.resilience4j</groupId>
+            <artifactId>resilience4j-spring-boot2</artifactId>
+            <version>${resilience4j-spring-boot2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.resilience4j</groupId>
+            <artifactId>resilience4j-micrometer</artifactId>
+            <version>${resilience4j-spring-boot2.version}</version>
         </dependency>
 
         <dependency>

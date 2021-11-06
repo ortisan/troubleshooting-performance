@@ -7,10 +7,10 @@ client.load(['protos'], 'stocks.proto');
 
 export let options = {
   stages: [
-    { duration: '10s', target: 200, rps: 1 },
-    { duration: '10s', target: 400, rps: 1 },
-    { duration: '10s', target: 1000, rps: 1 },
-    { duration: '1m', target: 1000, rps: 1 },
+    { duration: '10s', target: 20, rps: 1 },
+    { duration: '10s', target: 20, rps: 1 },
+    { duration: '10s', target: 20, rps: 1 },
+    { duration: '1m', target: 20, rps: 1 },
   ],
 };
 
