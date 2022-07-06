@@ -102,28 +102,28 @@
     <orderEntry type="library" name="Maven: net.devh:grpc-server-spring-boot-starter:2.11.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: net.devh:grpc-server-spring-boot-autoconfigure:2.11.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: net.devh:grpc-common-spring-boot:2.11.0.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: io.grpc:grpc-protobuf:1.41.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.17.2" level="project" />
+    <orderEntry type="library" name="Maven: io.grpc:grpc-protobuf:1.37.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.12.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.api.grpc:proto-google-common-protos:2.0.1" level="project" />
-    <orderEntry type="library" name="Maven: io.grpc:grpc-protobuf-lite:1.41.0" level="project" />
-    <orderEntry type="library" name="Maven: io.grpc:grpc-stub:1.41.0" level="project" />
-    <orderEntry type="library" name="Maven: io.grpc:grpc-services:1.41.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: com.google.protobuf:protobuf-java-util:3.17.2" level="project" />
-    <orderEntry type="library" name="Maven: io.grpc:grpc-core:1.41.0" level="project" />
-    <orderEntry type="library" name="Maven: io.grpc:grpc-api:1.41.0" level="project" />
-    <orderEntry type="library" name="Maven: io.grpc:grpc-context:1.41.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: io.grpc:grpc-protobuf-lite:1.37.0" level="project" />
+    <orderEntry type="library" name="Maven: io.grpc:grpc-stub:1.37.0" level="project" />
+    <orderEntry type="library" name="Maven: io.grpc:grpc-services:1.37.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.google.protobuf:protobuf-java-util:3.12.0" level="project" />
+    <orderEntry type="library" name="Maven: io.grpc:grpc-core:1.37.0" level="project" />
+    <orderEntry type="library" name="Maven: io.grpc:grpc-api:1.37.0" level="project" />
+    <orderEntry type="library" name="Maven: io.grpc:grpc-context:1.37.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.google.code.gson:gson:2.8.6" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.google.android:annotations:4.1.1.4" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.codehaus.mojo:animal-sniffer-annotations:1.19" level="project" />
-    <orderEntry type="library" name="Maven: com.google.errorprone:error_prone_annotations:2.9.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.guava:guava:30.1-android" level="project" />
+    <orderEntry type="library" name="Maven: com.google.errorprone:error_prone_annotations:2.4.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:30.0-android" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:failureaccess:1.0.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava" level="project" />
     <orderEntry type="library" name="Maven: org.checkerframework:checker-compat-qual:2.5.5" level="project" />
     <orderEntry type="library" name="Maven: com.google.j2objc:j2objc-annotations:1.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: io.perfmark:perfmark-api:0.23.0" level="project" />
-    <orderEntry type="library" name="Maven: io.grpc:grpc-netty-shaded:1.41.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: io.grpc:grpc-netty-shaded:1.37.0" level="project" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.18" level="project" />
     <orderEntry type="library" name="Maven: io.micrometer:micrometer-registry-prometheus:1.6.4" level="project" />
     <orderEntry type="library" name="Maven: io.prometheus:simpleclient_common:0.9.0" level="project" />
