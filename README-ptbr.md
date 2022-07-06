@@ -40,6 +40,29 @@ docker-compose up
 | Prometheus       | <http://localhost:9091> |
 | Grafana       | <http://localhost:3000> |
 
+## Grafana
+
+**Primeiro Login:**
+
+   user: **admin**
+
+   password: **admin**
+
+### Configurando Datasource
+
+Configure o datasource utilizando o dns e porta do serviço do prometheus no docker-compose (**prometheus:9090**)
+
+![image](images/grafana-datasource-config.png)
+
+**Dashboards Úteis:**
+
+   1. Single Pane of Glass (grafana/custom-dash-spg.json)
+![image](images/spg.png)
+   2. Micrometer - <https://grafana.com/grafana/dashboards/4701>
+![image](images/dashboard-jvm-micrometer.png)
+   3. Spring boot - <https://grafana.com/grafana/dashboards/10280>
+![image](images/dashboard-springboot.png)
+
 ## ToolKit performance
 
 ### SO
@@ -266,6 +289,37 @@ jcmd <process id> Thread.print
 
 ### Tunning
 
+#### Áreas de Memória
+
+A JVM possui as seguintes áreas de memória:
+
+1. Heap
+2. Non Heap
+
+##### Heap
+
+A memória Heap, é reservada para instâncias de objetos e arrays Java. Essa área é criada quando a JVM inicia.
+
+Flags:
+
+```sh
+# Tamanho inicial da Heap
+-Xms<size>
+# Tamanho máximo da Heap
+-Xmx<size>
+```
+
+##### Non Heap
+
+A JVM também aloca uma área  de memória chamada Non Heap. Esse espaço é utilizado para armazenar os metadados de classes, campos, métodos, código dos contrutores entre outros.
+
+A memória Non Heap possui as seguintes áreas:
+
+1. Metaspace
+2. Memória Thread (Stack)
+3. Code Cache
+4. Garbage Collector Data
+
 #### JIT Compiler
 
 Ao compilarmos uma classe utilizando o comando **javac**, o compilador irá gerar uma representação binária chamada bytecode. Esse arquivo é interpretado pela JVM, que por sua vez traduz para linguagem de máquina. Esse processo de interpretação acaba onerando a performance justamente por ter esse processo intermediário.
@@ -315,7 +369,7 @@ Observação:
 
 Algoritmos com coletores concorrentes como o G1GC analisam os objetos sem parar as threads.
 
-Tradeoff:
+Qual algoritmo utilizar?
 
 1. Se possui CPU suficiente, utilize os algoritmos concorrentes.
 2. Se a CPU é limitada, a utilização de coletores concorrentes causará uma maior concorrência entre as threads do GC e as thrads aumentará o tempo de resposta, pois as threads do GC concorrerão com a CPU das threads da aplicação. Utilize portanto o **SerialGC**.
@@ -337,3 +391,99 @@ N = 8 + ((QTD_CPUs - 8) * 5 / 8)
 ```sh
 -Xlog:gc*:file=gc.log:time:filecount=7,filesize=8M
 ```
+
+##### Heap Adaptativo
+
+É possível forçar os tempos máximo de tempo que o GC pode utilizar e também o tempo máximo de pausa quando ocorre o GC.
+
+```sh
+# Tempo máximo de pausa
+--XX:MaxGCPauseMillis=N
+# Tempo efetuando o GC
+--XX:GCTimeRatio=N
+```
+
+#### Análise da Heap
+
+A análise da Heap é importante porque podemos otimizar melhor o uso de recursos e até descobrir possíveis memory leaks.
+
+###### Histogramas e Dump
+
+```sh
+# Histograma
+jcmd <process id> GC.class_histogram
+
+# Resultado: Num, # Instancias, # Bytes e Nome da Classe
+```
+
+```sh
+# Heap Dump
+jcmd <process id> GC.heap_dump <dir destino>/<filename>.hprof
+```
+
+Flags para Heap Dumps automáticos
+
+```sh
+# Criará um Heap Dump assim que ocorre um erro de estouro de memória
+-XX:+HeapDumpOnOutOfMemoryError
+# Caminho do arquivo. Por default ele vai estar no diretório da aplicação com o nome java_pid<pid>.hprof
+-XX:+HeapDumpPath=<dir>/<filename>.hprof
+# Cria um dump antes de rodar o full gc
+-XX:+HeapDumpBeforeFullGC
+# Cria um dump após rodar o full gc
+-XX:+HeapDumpAfterFullGC
+```
+
+#### Footprint
+
+Além da memória Heap, a JVM utiliza também memória nativa (JNI). O total de memória Heap e memória nativa é realmente a quantidade de recursos do processo e é chamado de footprint.
+
+Quando configuramos as flags **-Xms1024m** e **-Xmx2024m**, estamos informando à JVM que a Heap vai iniciar com 1GB e pode crescer até 2GB. A JVM então se comunica com o SO solicitando **alocação** de 1GB (Também conhecido por **commited**) e **reserva** de 2GB (Também conhecido por **virtual size**)
+
+Essa limitação de memória Heap é utilizada para objetos java tradicionais. Threads e Objetos de IO/NIO alocam memória nativa diretamente com o SO.
+
+Nos sistemas Unix, a estimativa do footprint pode ser obtida através do RSS (Resident Set Size).
+
+##### Minimização do Footprint
+
+Alguns padrões podem ser utilizados.
+
+1. Diminuir a Heap
+2. Limitar a criação de threads e minimizar a quantidade de memória utilizada por cada thread.
+3. Diminuir o Codecache
+4. Utilizar alocadores de memória otimizados ([mimalloc](https://github.com/microsoft/mimalloc) / [tcmalloc](https://github.com/google/tcmalloc))
+
+##### Limitação da memória de threads
+
+Por default, cada thread aloca 1Mb de memória. Grande parte desse valor, não é utilizado.
+
+Utilize a flag para configurar a diminuição desse valor:
+
+```sh
+# Configura a quantidade de memória alocada para cada thread.
+-Xss<size>
+```
+
+#### Profilers
+
+Profilers são aplicações que extraem as informações de recursos utilizados por processos. Algumas dessa aplicações fazem as extrações pausando os processos e consequentemente causam impactos de performance.
+
+O [Async Profiler](https://github.com/jvm-profiling-tools/async-profiler) foi desenvolvido pensando nesse gap. Pode ser utilizado como Java Agent ou através de linha de comando. Ele extrai as seguintes informações:
+
+1. CPU cycles
+2. Hardware and Software performance counters like cache misses, branch misses, page faults, context switches etc.
+3. Allocations in Java Heap
+4. Contented lock attempts, including both Java object monitors and ReentrantLocks
+
+#### [Flame Graphs](https://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html)
+
+![image](images/cpu-bash-flamegraph.png)
+
+Tradução:
+
+- Cada caixa representa as amostras de funçõs na stack que utilizaram CPU.
+- O **eixo y** mostra a profundidade da stack, onde as caixas ancestrais são as chamadoras.
+- O **eixo x** apresenta as amostras.
+- O tamanho de cada caixa representa o tempo de CPU que a função ou seu ancestral utilizou.
+
+[Brendan Greg](https://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html)
