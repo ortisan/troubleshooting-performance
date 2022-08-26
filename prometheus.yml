@@ -2,12 +2,12 @@ global:
   scrape_interval: 15s
   evaluation_interval: 15s
 scrape_configs:
-  - job_name: 'Prometheus Server'
+  - job_name: "Prometheus Server"
     scrape_interval: 5s
     static_configs:
-      - targets: ['prometheus:9090'] # Prometheus Server
-  - job_name: 'SpringBoot Server App'
+      - targets: ["prometheus:9090"] # Prometheus Server
+  - job_name: "SpringBoot Server App"
     scrape_interval: 5s
-    metrics_path: '/actuator/prometheus'
+    metrics_path: "/actuator/prometheus"
     static_configs:
-      - targets: ['server:8080'] # Application
+      - targets: ["app:8080"] # Application

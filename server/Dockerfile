@@ -1,12 +1,11 @@
 #FROM adoptopenjdk/openjdk11:alpine
 FROM adoptopenjdk/openjdk11:jdk-11.0.10_9-alpine
 
-RUN apk --no-cache add git build-base cmake linux-headers
-
-#mimalloc config
-RUN cd /; git clone https://github.com/microsoft/mimalloc; cd mimalloc; mkdir build; cd build; cmake ..; make
-ENV LD_PRELOAD=/lib64/libmimalloc.so
-ENV MIMALLOC_LARGE_OS_PAGES=1
+# mimalloc config
+# RUN apk --no-cache add git build-base cmake linux-headers
+# RUN cd /; git clone https://github.com/microsoft/mimalloc; cd mimalloc; mkdir build; cd build; cmake ..; make
+# ENV LD_PRELOAD=/lib64/libmimalloc.so
+# ENV MIMALLOC_LARGE_OS_PAGES=1
 
 ENV LANG C.UTF-8
 
@@ -27,4 +26,6 @@ COPY ./target/server.jar ./app.jar
 #CMD ["java", "-XX:NativeMemoryTracking=summary", "-XX:-UseStringDeduplication", "-XX:-TieredCompilation", "-XX:CompressedClassSpaceSize=128m", "-XX:MaxMetaspaceSize=128m", "-Xms128m", "-Xmx200m", "-XX:MaxGCPauseMillis=200", "-XX:ParallelGCThreads=5", "-XX:ConcGCThreads=5", "-jar", "app.jar"]
 # Best footprint until now
 # CMD ["java", "-XX:NativeMemoryTracking=summary", "-Xss256k",  "-XX:ReservedCodeCacheSize=30m", "-XX:MaxDirectMemorySize=128m", "-XX:+UseStringDeduplication", "-XX:CompressedClassSpaceSize=15m", "-XX:MaxMetaspaceSize=100m", "-Xms128m", "-Xmx200m", "-XX:MaxGCPauseMillis=200", "-XX:ParallelGCThreads=5", "-XX:ConcGCThreads=5", "-jar", "app.jar"]
-CMD ["java", "-XX:MaxGCPauseMillis=200", "-XX:ParallelGCThreads=5", "-XX:ConcGCThreads=5", "-jar", "app.jar"]
+
+CMD ["java", "-jar", "app.jar"]
+# CMD ["java", "-XX:MaxGCPauseMillis=200", "-XX:ParallelGCThreads=5", "-XX:ConcGCThreads=5", "-jar", "app.jar"]

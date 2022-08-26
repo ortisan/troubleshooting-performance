@@ -15,7 +15,7 @@ pip install -r requirements.txt
 ## Running
 
 ```sh
-jupyter notebook notebooks
+poetry jupyter notebook notebooks
 ```
 
 The [**Testing Prometheus Queries.ipynb**](https://github.com/ortisan/troubleshooting-performance/blob/main/analytics/notebooks/Testing%20Prometheus%20Queries.ipynb) notebook have one example of Prometheus queries, that can help on your analysis.

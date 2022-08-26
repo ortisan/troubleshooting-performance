@@ -33,7 +33,7 @@ services:
   #   depends_on:
   #     - mysql
 
-  server:
+  app:
     restart: always
     build:
       context: server
@@ -43,6 +43,7 @@ services:
       - MYSQL_PORT=3306
       - MYSQL_USER=root
       - MYSQL_PASSWORD=123456
+      - JAVA_OPTS="-Xms128m,-Xmx200m"
     ports:
       - 8080:8080
       - 9090:9090
@@ -65,7 +66,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - PORT=8080
-      - STOCKS_SERVICE_URI=static://server:9090
+      - STOCKS_SERVICE_URI=static://app:9090
     ports:
       - 8081:8080
     deploy:
@@ -77,7 +78,7 @@ services:
           cpus: 1
           memory: 512M
     depends_on:
-      - server
+      - app
 
   prometheus:
     image: prom/prometheus
@@ -95,7 +96,6 @@ services:
       - "3000:3000"
     volumes:
       - ./docker-volumes/grafana:/var/lib/grafana
-
   # front-envoy:
   #   build:
   #     context: grpc-zpages/envoy

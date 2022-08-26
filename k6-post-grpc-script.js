@@ -10,7 +10,7 @@ export let options = {
     { duration: '10s', target: 20, rps: 1 },
     { duration: '10s', target: 20, rps: 1 },
     { duration: '10s', target: 20, rps: 1 },
-    { duration: '1m', target: 20, rps: 1 },
+    { duration: '10m', target: 20, rps: 1 },
   ],
 };
 
